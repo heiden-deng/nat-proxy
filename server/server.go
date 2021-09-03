@@ -1,7 +1,7 @@
 package main
 
 import (
-	"net-proxy/common"
+	"nat-proxy/common"
 	"os"
 	"net"
 	"log"

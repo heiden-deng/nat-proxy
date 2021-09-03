@@ -2,7 +2,7 @@ package main
 
 import (
 	"os"
-	"net-proxy/common"
+	"nat-proxy/common"
 	"log"
 	"net"
 	"fmt"

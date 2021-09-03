@@ -12,4 +12,4 @@
 
 
 ### 2 启动客户端
-./proxy_client2 config.ini  
+./proxy_client2 config.ini
