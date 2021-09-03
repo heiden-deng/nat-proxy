@@ -33,17 +33,19 @@ func main()  {
 	wg.Add(2)
 
 	go func() {
+		defer wg.Done()
 		defer sConn.Close()
 		log.Println("start transfer data from ",sConn.RemoteAddr().String())
 		io.Copy(aConn, sConn)
-		wg.Done()
+
 		log.Println()
 	}()
 	go func() {
+		defer wg.Done()
 		defer aConn.Close()
 		log.Println("start transfer data from ",aConn.RemoteAddr().String())
 		io.Copy(sConn, aConn)
-		wg.Done()
+
 	}()
 
 	log.Println("start transfer data between remote server and local service")
