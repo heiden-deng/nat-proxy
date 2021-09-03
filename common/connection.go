@@ -13,7 +13,7 @@ type ConnInfo struct {
 	Infer chan bool
 }
 
-type ConnChan chan net.Conn
+type ConnChan chan net.TCPConn
 
 
 var ErrShortWrite = errors.New("short write")

@@ -26,17 +26,29 @@ func main()  {
 	aConn,err := net.DialTCP("tcp",nil, localAddr)
 	checkError(err)
 	log.Println("connect to service success,",cf["local_addr"])
-
 	exitChan := make(chan bool)
+	for{
 
-	go common.Transfer(sConn, aConn, exitChan, 3)
-	go common.Transfer(aConn, sConn, exitChan, 3)
+		go common.Transfer(sConn, aConn, exitChan, 3)
+		go common.Transfer(aConn, sConn, exitChan, 3)
 
+		log.Println("start transfer data between remote server and local service")
+		_ = <-exitChan
+		log.Println("client start exit..,close")
+		sConn.Close()
+		aConn.Close()
+		log.Println("reconnect to server and local service ...")
+		sConn,err = net.DialTCP("tcp",nil, serverAddr)
+		checkError(err)
+		log.Println("connect to server success,",cf["server_addr"])
 
+		localAddr,err := net.ResolveTCPAddr("tcp4", cf["local_addr"])
+		checkError(err)
+		aConn,err = net.DialTCP("tcp",nil, localAddr)
+		checkError(err)
+		log.Println("connect to service success,",cf["local_addr"])
+	}
 
-	log.Println("start transfer data between remote server and local service")
-	_ = <-exitChan
-	log.Println("client start exit..")
 }
 
 
